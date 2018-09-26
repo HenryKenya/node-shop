@@ -11,7 +11,11 @@ const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 
 // Logging using morgan
-app.use(morgan('dev'))
+app.use(morgan('dev'));
+
+// Parsing data
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 // Middleware to handle requests: Define API end points
 app.use('/products', productRoutes);
