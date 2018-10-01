@@ -7,9 +7,19 @@ const Product = require('../models/products');
 
 // GET requests
 router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: "GET all products route"
-    })
+    Product.find()
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                products: result
+            })
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
 });
 
 // POST requests
@@ -58,19 +68,45 @@ router.get('/:productId', (req, res, next) => {
 // PATCH Single product
 router.patch('/:productId', (req, res, next) => {
     const id = req.params.productId;
-    res.status(201).json({
-        message: "Updated single product",
-        id: id
+    const updateOperations = {};
+
+    for (const ops of req.body){
+        updateOperations[ops.propName]  = ops.value;
+    }
+
+    Product.update({ _id: id }, { $set: updateOperations } )
+    .exec()
+    .then(result => {
+        res.status(200).json({
+            updatedObject: result
+        })
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({
+            error: err
+        })
     })
 });
 
 // Delete single product
-router.get('/:productId', (req, res, next) => {
+router.delete('/:productId', (req, res, next) => {
     const id = req.params.productId;
-    res.status(200).json({
-        message: "Deleted single product"
-    })
-})
+    Product.remove({ _id: id })
+        .exec()
+        .then(result => {
+            console.log(result);
+            res.status(200).json({
+                message: "Product deleted"
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
+});
 
 
 
