@@ -13,8 +13,11 @@ const productRoutes = require('./api/routes/products');
 const ordersRoutes = require('./api/routes/orders');
 
 // mongoose connect to database
-mongoose.connect(`mongodb+srv://node-shop:${process.env.MONGO_ATLAS_PW}@node-shop-jqwtd.mongodb.net/test?retryWrites=true`, {
-    useMongoClient: true
+mongoose.connect(
+    'mongodb+srv://node-shop:' 
+    + process.env.MONGO_ATLAS_PW + 
+    '@node-shop-jqwtd.mongodb.net/test?retryWrites=true', {
+    useNewUrlParser: true
 });
 
 // Logging using morgan
