@@ -4,7 +4,9 @@ const app = express();
 
 const morgan = require('morgan');
 
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+
+const mongoose = require('mongoose');
 
 // Routes
 const productRoutes = require('./api/routes/products');
