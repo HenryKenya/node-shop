@@ -29,18 +29,30 @@ router.post('/', (req, res, next) => {
                 createdProduct: result
             });
         })
-        .catch(error => {
-            console.log(error)
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
         });
 });
 
 // GET Single product
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
-    res.status(200).json({
-        message: "GET single product",
-        id: id
-    });
+    Product.findById(id)
+        .exec()
+        .then(result => {
+            res.status(200).json({
+                product: result
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                error: err
+            })
+        });
 });
 
 // PATCH Single product
