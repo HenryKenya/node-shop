@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+// Import product model
+const Product = require('../models/products');
+
 // GET requests
 router.get('/', (req, res, next) => {
     res.status(200).json({
